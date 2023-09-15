@@ -5,7 +5,7 @@ class Dimensions {
   static double screenWidth = Get.context!.width;
 
   static double pageViewContainers = screenHeight / 3.84;
-  static double pageViewTextContainers = screenHeight / 7.03;
+  static double pageViewTextContainers = screenHeight / 6.6;
   static double pageView = screenHeight / 2.64;
 
   ///margin adn padding

@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_full_stack_app/controllers/recommended_food_controller.dart';
 import 'package:get/get.dart';
 
-import 'screens/food/recommended_food_detail.dart';
+import 'controllers/popular_product_controller.dart';
+import 'core/routes/routes_helper.dart';
+import 'helper/dependencies.dart' as dep;
+import 'screens/home/main_food_page.dart';
 
-void main() {
-  runApp(const MyMain());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await dep.init();
+    runApp(const MyMain());
+  } catch (error) {
+    print('Error during app initialization: $error');
+  }
 }
 
 class MyMain extends StatelessWidget {
@@ -13,16 +23,15 @@ class MyMain extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Get.find<PopularProductController>().getPopularList();
+    Get.find<RecommendedProductController>().getRecommendedList();
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Food Delivery',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      // home: MainFoodPage(),
-      // home: PopularFoodDetails(),
-      home: RecommendedFoodDetails(),
+      initialRoute: RouteHelper.initial,
+      // home: CartPage(),
+      home: MainFoodPage(),
+      getPages: RouteHelper.routes,
     );
   }
 }
